@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Test - Cattle Disease Detection</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    
+    .container {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    
+    h1 {
+      text-align: center;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+    
+    .status {
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      font-weight: bold;
+    }
+    
+    .status.success {
+      background: #d1fae5;
+      color: #065f46;
+    }
+    
+    .upload-zone {
+      border: 3px dashed #cbd5e1;
+      border-radius: 15px;
+      padding: 60px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+    
+    .upload-zone:hover {
+      border-color: #667eea;
+      background: #f0f4ff;
+      transform: scale(1.02);
+    }
+    
+    .upload-zone.drag-over {
+      border-color: #667eea;
+      background: #e0e7ff;
+    }
+    
+    .upload-icon {
+      font-size: 60px;
+      color: #667eea;
+      margin-bottom: 20px;
+    }
+    
+    input[type="file"] {
+      display: none;
+    }
+    
+    .preview {
+      margin: 20px 0;
+      text-align: center;
+    }
+    
+    .preview img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    button {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f9fafb;
+      border-radius: 10px;
+      display: none;
+    }
+    
+    .result.show {
+      display: block;
+    }
+    
+    .result h3 {
+      color: #667eea;
+      margin-bottom: 15px;
+    }
+    
+    .result-item {
+      padding: 10px;
+      margin: 10px 0;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      display: none;
+    }
+    
+    .loading.show {
+      display: block;
+    }
+    
+    .spinner {
+      border: 4px solid #f3f4f6;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .info {
+      background: #fef3c7;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #92400e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🐄 Upload Test</h1>
+    <div class="status success">
+      ✅ Upload Fix Applied - Ready to Test!
+    </div>
+    
+    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+      <div class="upload-icon">☁️</div>
+      <h3>Click or Drag & Drop</h3>
+      <p>Upload any cattle image (JPEG, PNG, GIF, etc.)</p>
+      <input type="file" id="fileInput" accept="image/*">
+    </div>
+    
+    <div class="preview" id="preview"></div>
+    
+    <button id="uploadBtn" style="display: none;" onclick="testUpload()">
+      🧠 Test Upload
+    </button>
+    
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Testing upload...</p>
+    </div>
+    
+    <div class="result" id="result">
+      <h3>✅ Test Result</h3>
+      <div id="resultContent"></div>
+    </div>
+    
+    <div class="info">
+      <strong>Note:</strong> This is a test page to verify the upload fix works. 
+      Make sure your server is running on <code>http://localhost:5000</code>
+    </div>
+  </div>
+
+  <script>
+    const uploadZone = document.getElementById('uploadZone');
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const loading = document.getElementById('loading');
+    const result = document.getElementById('result');
+    const resultContent = document.getElementById('resultContent');
+    
+    let selectedFile = null;
+    
+    // Drag and drop
+    uploadZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+    
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('drag-over');
+    });
+    
+    uploadZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFile(files[0]);
+      }
+    });
+    
+    fileInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+      }
+    });
+    
+    function handleFile(file) {
+      selectedFile = file;
+      
+      // Show preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+        uploadBtn.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+    
+    async function testUpload() {
+      if (!selectedFile) {
+        alert('Please select a file first');
+        return;
+      }
+      
+      loading.classList.add('show');
+      result.classList.remove('show');
+      uploadBtn.disabled = true;
+      
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+      
+      try {
+        // Test upload without authentication (just to test file validation)
+        const response = await fetch('http://localhost:5000/api/upload/predict', {
+          method: 'POST',
+          body: formData
+        });
+        
+        const data = await response.json();
+        
+        loading.classList.remove('show');
+        result.classList.add('show');
+        uploadBtn.disabled = false;
+        
+        if (response.ok) {
+          resultContent.innerHTML = `
+            <div class="result-item">
+              <strong>Status:</strong>
+              <span style="color: green;">✅ Upload Successful!</span>
+            </div>
+            <div class="result-item">
+              <strong>File:</strong>
+              <span>${selectedFile.name}</span>
+            </div>
+            <div class="result-item">
+              <strong>Size:</strong>
+              <span>${(selectedFile.size / 1024).toFixed(2)} KB</span>
+            </div>
+            <div class="result-item">
+              <strong>Type:</strong>
+              <span>${selectedFile.type}</span>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #d1fae5; border-radius: 8px; color: #065f46;">
+              <strong>🎉 Success!</strong> The upload fix is working correctly. 
+              Your file was accepted by the server.
+            </div>
+          `;
+        } else {
+          resultContent.innerHTML = `
+            <div class="result-item">
+              <strong>Status:</strong>
+              <span style="color: red;">❌ ${data.error || 'Upload Failed'}</span>
+            </div>
+            <div style="margin-top: 20px; padding: 15px; background: #fee2e2; border-radius: 8px; color: #991b1b;">
+              <strong>Note:</strong> If you see "No token provided" or authentication error, 
+              that's normal for this test page. The important thing is that the file 
+              validation passed (no "Only image files allowed" error).
+            </div>
+          `;
+        }
+      } catch (error) {
+        loading.classList.remove('show');
+        result.classList.add('show');
+        uploadBtn.disabled = false;
+        
+        resultContent.innerHTML = `
+          <div class="result-item">
+            <strong>Status:</strong>
+            <span style="color: red;">❌ Connection Error</span>
+          </div>
+          <div style="margin-top: 20px; padding: 15px; background: #fee2e2; border-radius: 8px; color: #991b1b;">
+            <strong>Error:</strong> ${error.message}<br><br>
+            Make sure your server is running on <code>http://localhost:5000</code>
+          </div>
+        `;
+      }
+    }
+  </script>
+</body>
+</html>
