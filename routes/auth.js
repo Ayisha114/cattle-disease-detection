@@ -98,21 +98,52 @@ router.post('/phone/verify-otp', async (req, res) => {
   try {
     const { phone, otp, name } = req.body;
     
-    // Verify OTP
-    if (req.session.otp !== otp || req.session.phone !== phone) {
-      return res.status(400).json({ error: 'Invalid OTP' });
+    console.log('🔍 OTP Verification Debug:', {
+      receivedOTP: otp,
+      receivedOTPType: typeof otp,
+      sessionOTP: req.session.otp,
+      sessionOTPType: typeof req.session.otp,
+      receivedPhone: phone,
+      sessionPhone: req.session.phone,
+      match: req.session.otp === otp
+    });
+    
+    // Convert both to strings and trim whitespace for comparison
+    const sessionOTP = String(req.session.otp || '').trim();
+    const receivedOTP = String(otp || '').trim();
+    const sessionPhone = String(req.session.phone || '').trim();
+    const receivedPhone = String(phone || '').trim();
+    
+    // Verify OTP with better error messages
+    if (!req.session.otp) {
+      return res.status(400).json({ error: 'OTP expired or not found. Please request a new OTP.' });
     }
     
+    if (sessionOTP !== receivedOTP) {
+      console.log('❌ OTP mismatch:', { sessionOTP, receivedOTP });
+      return res.status(400).json({ error: 'Invalid OTP. Please check and try again.' });
+    }
+    
+    if (sessionPhone !== receivedPhone) {
+      console.log('❌ Phone mismatch:', { sessionPhone, receivedPhone });
+      return res.status(400).json({ error: 'Phone number mismatch. Please try again.' });
+    }
+    
+    console.log('✅ OTP verified successfully');
+    
     // Find or create user
-    let user = await User.findOne({ phone });
+    let user = await User.findOne({ phone: receivedPhone });
     
     if (!user) {
       user = await User.create({
         name: name || 'User',
-        phone,
-        email_or_phone: phone,
+        phone: receivedPhone,
+        email_or_phone: receivedPhone,
         auth_provider: 'phone'
       });
+      console.log('✅ New user created:', user.user_id);
+    } else {
+      console.log('✅ Existing user found:', user.user_id);
     }
     
     // Clear OTP from session
@@ -137,6 +168,7 @@ router.post('/phone/verify-otp', async (req, res) => {
       }
     });
   } catch (error) {
+    console.error('❌ OTP verification error:', error);
     res.status(500).json({ error: error.message });
   }
 });
