@@ -1,16 +1,41 @@
 # 🐄 Cattle Disease Detection & Health Monitoring System
 
-## Production-Ready Full-Stack AI Application
-
-A comprehensive web application for detecting cattle diseases using Vision Transformer (ViT) AI models, with complete authentication, reporting, and admin dashboard capabilities.
+<div align="center">
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Node](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen.svg)
 ![MongoDB](https://img.shields.io/badge/mongodb-%3E%3D4.0-green.svg)
+![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)
+
+**Production-Ready AI-Powered Cattle Disease Detection System**
+
+[Quick Start](QUICKSTART.md) • [Documentation](#-features) • [Deployment](DEPLOYMENT.md) • [ML Integration](ML_INTEGRATION.md) • [Contributing](CONTRIBUTING.md)
+
+</div>
+
+---
+
+## 📖 Overview
+
+A comprehensive web application for detecting cattle diseases using Vision Transformer (ViT) AI models, with complete authentication, reporting, and admin dashboard capabilities. Built to help farmers detect diseases early and take preventive action.
+
+### 🎯 Key Highlights
+
+- 🤖 **AI-Powered Detection** - Vision Transformer model integration
+- 🔐 **Secure Authentication** - Google OAuth & Mobile OTP
+- 📊 **Admin Dashboard** - Analytics with beautiful charts
+- 📱 **Mobile Responsive** - Works perfectly on all devices
+- 📄 **PDF Reports** - Professional downloadable reports
+- 🌍 **Multi-language** - English, Hindi, Telugu, Tamil
+- 🔊 **Voice Output** - Accessibility features
+- 🚀 **Production Ready** - Enterprise-grade architecture
+
+---
 
 ## ✨ Features
 
-### 🔐 Authentication
+### 🔐 Authentication System
 - **Google OAuth 2.0** - Seamless login with Google accounts
 - **Mobile OTP Authentication** - SMS-based verification for farmers
 - **Unique User ID** - Auto-generated UUID for each user
@@ -42,295 +67,151 @@ A comprehensive web application for detecting cattle diseases using Vision Trans
 - **Recent Activity Monitor** - Real-time activity feed
 - **Export Capabilities** - Download reports and statistics
 
+---
+
 ## 🛠️ Tech Stack
 
+<div align="center">
+
 ### Backend
-- **Node.js** - JavaScript runtime
-- **Express.js** - Web application framework
-- **MongoDB** - NoSQL database with Mongoose ODM
-- **Passport.js** - Authentication middleware
-- **JWT** - JSON Web Tokens for session management
-- **Multer** - File upload handling
-- **PDFKit** - PDF report generation
-- **Axios** - HTTP client for ML API calls
-- **Bcrypt** - Password hashing
+![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
+![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
 
 ### Frontend
-- **Vanilla JavaScript** - No framework dependencies
-- **Tailwind CSS** - Utility-first CSS framework
-- **Chart.js** - Beautiful data visualizations
-- **Font Awesome** - Icon library
-- **Web Speech API** - Voice output functionality
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![Chart.js](https://img.shields.io/badge/Chart.js-FF6384?style=for-the-badge&logo=chartdotjs&logoColor=white)
 
 ### ML Integration
-- **Vision Transformer (ViT)** - Your trained model
-- **REST API** - External ML inference endpoint
-- **Image Processing** - JPEG, JPG, PNG support
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![Transformers](https://img.shields.io/badge/🤗_Transformers-FFD21E?style=for-the-badge)
 
-## 📦 Installation
+</div>
+
+---
+
+## 📦 Quick Installation
 
 ### Prerequisites
 - Node.js >= 14.0.0
 - MongoDB >= 4.0
 - npm or yarn
 
-### Quick Start
+### Setup in 3 Steps
 
 ```bash
-# Clone the repository
+# 1. Clone the repository
 git clone https://github.com/Ayisha114/cattle-disease-detection.git
 cd cattle-disease-detection
 
-# Install dependencies
+# 2. Install dependencies & configure
 npm install
-
-# Create environment file
 cp .env.example .env
+# Edit .env with your settings
 
-# Configure your environment variables
-nano .env
-
-# Start MongoDB (if running locally)
-mongod
-
-# Run the application
+# 3. Start the application
 npm start
-
-# For development with auto-reload
-npm run dev
 ```
+
+**That's it!** Open http://localhost:5000 🎉
+
+For detailed setup instructions, see [QUICKSTART.md](QUICKSTART.md)
+
+---
 
 ## 🔧 Configuration
 
-### Environment Variables
-
-Create a `.env` file in the root directory:
+Create a `.env` file:
 
 ```env
-# Server Configuration
+# Server
 PORT=5000
 NODE_ENV=development
-CLIENT_URL=http://localhost:5000
 
 # MongoDB
 MONGODB_URI=mongodb://localhost:27017/cattle-detection
 
 # JWT Secrets (Change these!)
-JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
-SESSION_SECRET=your-session-secret-key-change-this-too
+JWT_SECRET=your-super-secret-jwt-key
+SESSION_SECRET=your-session-secret
 
-# Google OAuth (Get from Google Cloud Console)
-GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com
+# Google OAuth (Optional)
+GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 
-# Twilio (Optional - for production OTP)
-TWILIO_ACCOUNT_SID=your-twilio-account-sid
-TWILIO_AUTH_TOKEN=your-twilio-auth-token
-TWILIO_PHONE_NUMBER=+1234567890
-
-# ML API Endpoint (Your trained ViT model)
+# ML API (Your trained model)
 ML_API_URL=http://your-ml-api-endpoint.com/predict
 ```
 
-### Google OAuth Setup
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select existing
-3. Enable Google+ API
-4. Create OAuth 2.0 credentials
-5. Add authorized redirect URI: `http://localhost:5000/api/auth/google/callback`
-6. Copy Client ID and Client Secret to `.env`
-
-### Twilio Setup (Optional)
-
-1. Sign up at [Twilio](https://www.twilio.com/)
-2. Get your Account SID and Auth Token
-3. Purchase a phone number
-4. Add credentials to `.env`
+---
 
 ## 🤖 ML Model Integration
 
-### Your Trained ViT Model
+### Quick Start with Mock Data
 
-Deploy your Vision Transformer model as a REST API endpoint.
+The application works out-of-the-box with mock predictions for testing. No ML model required initially!
 
-#### API Contract
+### Integrate Your Trained ViT Model
 
-**Endpoint:** `POST /predict`
-
-**Request:**
-```http
-POST /predict HTTP/1.1
-Content-Type: multipart/form-data
-
-image: <binary file data>
-```
-
-**Expected Response:**
-```json
-{
-  "status": "Healthy" | "Diseased",
-  "disease_name": "Lumpy Skin Disease",
-  "stage": "Early" | "Moderate" | "Severe",
-  "confidence": 87.5,
-  "precautions": [
-    "Isolate the affected cattle immediately",
-    "Consult a veterinarian as soon as possible",
-    "Ensure proper hygiene and sanitation"
-  ]
-}
-```
-
-### Deployment Options
-
-#### Option 1: Flask API
+**Step 1:** Deploy your model as a REST API
 
 ```python
 from flask import Flask, request, jsonify
-from transformers import ViTForImageClassification, ViTImageProcessor
+from transformers import ViTForImageClassification
 from PIL import Image
-import torch
 
 app = Flask(__name__)
-
-# Load your trained model
-model = ViTForImageClassification.from_pretrained('./your-model-path')
-processor = ViTImageProcessor.from_pretrained('./your-model-path')
+model = ViTForImageClassification.from_pretrained('./your-model')
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    image_file = request.files['image']
-    image = Image.open(image_file)
-    
-    # Preprocess
-    inputs = processor(images=image, return_tensors="pt")
-    
-    # Predict
-    with torch.no_grad():
-        outputs = model(**inputs)
-        predictions = torch.nn.functional.softmax(outputs.logits, dim=-1)
-    
-    # Get results
-    disease_idx = predictions.argmax().item()
-    confidence = predictions.max().item() * 100
-    
-    # Map to disease names (customize based on your model)
-    disease_map = {
-        0: "Healthy",
-        1: "Lumpy Skin Disease",
-        2: "Foot and Mouth Disease",
-        3: "Mastitis"
-    }
-    
-    disease_name = disease_map.get(disease_idx, "Unknown")
-    status = "Healthy" if disease_idx == 0 else "Diseased"
-    
-    # Determine stage based on confidence
-    if confidence > 90:
-        stage = "Severe"
-    elif confidence > 75:
-        stage = "Moderate"
-    else:
-        stage = "Early"
-    
-    # Precautions based on disease
-    precautions = get_precautions(disease_name)
-    
+    image = Image.open(request.files['image'])
+    # Your prediction logic
     return jsonify({
-        'status': status,
-        'disease_name': disease_name,
-        'stage': stage if status == "Diseased" else "N/A",
-        'confidence': round(confidence, 2),
-        'precautions': precautions
+        'status': 'Diseased',
+        'disease_name': 'Lumpy Skin Disease',
+        'stage': 'Moderate',
+        'confidence': 87.5,
+        'precautions': ['Isolate cattle', 'Call vet']
     })
 
-def get_precautions(disease_name):
-    precautions_map = {
-        "Lumpy Skin Disease": [
-            "Isolate affected cattle immediately",
-            "Consult veterinarian urgently",
-            "Vaccinate healthy cattle",
-            "Control insect vectors"
-        ],
-        "Foot and Mouth Disease": [
-            "Quarantine infected animals",
-            "Disinfect premises thoroughly",
-            "Report to authorities",
-            "Avoid animal movement"
-        ],
-        "Healthy": [
-            "Maintain regular health checkups",
-            "Ensure proper nutrition",
-            "Keep environment clean"
-        ]
-    }
-    return precautions_map.get(disease_name, ["Consult veterinarian"])
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000)
+app.run(port=8000)
 ```
 
-#### Option 2: FastAPI
+**Step 2:** Update `.env`
 
-```python
-from fastapi import FastAPI, File, UploadFile
-from transformers import pipeline
-from PIL import Image
-import io
-
-app = FastAPI()
-
-# Load model
-classifier = pipeline("image-classification", model="./your-model-path")
-
-@app.post("/predict")
-async def predict(image: UploadFile = File(...)):
-    contents = await image.read()
-    image_pil = Image.open(io.BytesIO(contents))
-    
-    results = classifier(image_pil)
-    
-    return {
-        "status": "Diseased" if results[0]['label'] != "Healthy" else "Healthy",
-        "disease_name": results[0]['label'],
-        "stage": "Moderate",
-        "confidence": round(results[0]['score'] * 100, 2),
-        "precautions": ["Consult veterinarian", "Isolate cattle"]
-    }
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+```env
+ML_API_URL=http://localhost:8000/predict
 ```
 
-#### Option 3: Cloud Deployment
-- **AWS SageMaker** - Managed ML inference
-- **Google Cloud AI Platform** - Scalable predictions
-- **Azure ML** - Enterprise ML deployment
-- **Hugging Face Inference API** - Hosted model endpoint
+For complete ML integration guide, see [ML_INTEGRATION.md](ML_INTEGRATION.md)
+
+---
 
 ## 📱 API Endpoints
 
 ### Authentication
-- `GET /api/auth/google` - Initiate Google OAuth flow
-- `GET /api/auth/google/callback` - Google OAuth callback
-- `POST /api/auth/phone/send-otp` - Send OTP to phone number
-- `POST /api/auth/phone/verify-otp` - Verify OTP and login
-- `GET /api/auth/me` - Get current user details
-- `POST /api/auth/logout` - Logout user
+- `GET /api/auth/google` - Initiate Google OAuth
+- `POST /api/auth/phone/send-otp` - Send OTP
+- `POST /api/auth/phone/verify-otp` - Verify OTP
+- `GET /api/auth/me` - Get current user
 
 ### Upload & Prediction
-- `POST /api/upload/predict` - Upload image and get disease prediction
+- `POST /api/upload/predict` - Upload image and get prediction
 
 ### Reports
-- `GET /api/reports` - Get all reports for logged-in user
-- `GET /api/reports/:report_id` - Get specific report details
-- `GET /api/reports/:report_id/download` - Download PDF report
+- `GET /api/reports` - Get user reports
+- `GET /api/reports/:id` - Get specific report
+- `GET /api/reports/:id/download` - Download PDF
 
 ### Admin (Admin only)
 - `GET /api/admin/users` - Get all users
-- `GET /api/admin/reports` - Get all reports
 - `GET /api/admin/stats` - Get dashboard statistics
+
+---
 
 ## 🗄️ Database Schema
 
@@ -339,15 +220,9 @@ if __name__ == "__main__":
 {
   user_id: String (UUID),
   name: String,
-  email: String,
-  phone: String,
   email_or_phone: String,
   auth_provider: 'google' | 'phone',
-  google_id: String,
-  profile_picture: String,
   role: 'user' | 'admin',
-  language: String,
-  voice_enabled: Boolean,
   created_at: Date
 }
 ```
@@ -357,8 +232,6 @@ if __name__ == "__main__":
 {
   report_id: String (UUID),
   user_id: String,
-  user_name: String,
-  image_url: String,
   status: 'Healthy' | 'Diseased',
   disease_name: String,
   stage: String,
@@ -368,70 +241,52 @@ if __name__ == "__main__":
 }
 ```
 
+---
+
 ## 🚀 Deployment
 
-### Railway
+### Railway (Recommended - Easiest)
 
 ```bash
-# Install Railway CLI
 npm install -g @railway/cli
-
-# Login
 railway login
-
-# Initialize project
 railway init
-
-# Add MongoDB plugin
-railway add
-
-# Deploy
 railway up
 ```
 
 ### Heroku
 
 ```bash
-# Install Heroku CLI
-npm install -g heroku
-
-# Login
-heroku login
-
-# Create app
 heroku create cattle-detection-app
-
-# Add MongoDB
 heroku addons:create mongolab
-
-# Deploy
 git push heroku main
 ```
 
 ### AWS EC2
 
-```bash
-# SSH into EC2 instance
-ssh -i your-key.pem ubuntu@your-ec2-ip
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment guide.
 
-# Install Node.js
-curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt-get install -y nodejs
+---
 
-# Install MongoDB
-# ... (MongoDB installation steps)
+## 📸 Screenshots
 
-# Clone and setup
-git clone https://github.com/Ayisha114/cattle-disease-detection.git
-cd cattle-disease-detection
-npm install
+<div align="center">
 
-# Use PM2 for process management
-npm install -g pm2
-pm2 start server.js --name cattle-api
-pm2 startup
-pm2 save
-```
+### Login Page
+![Login](https://via.placeholder.com/800x400/3b82f6/ffffff?text=Login+Page)
+
+### Dashboard
+![Dashboard](https://via.placeholder.com/800x400/10b981/ffffff?text=User+Dashboard)
+
+### Image Upload
+![Upload](https://via.placeholder.com/800x400/f59e0b/ffffff?text=Image+Upload)
+
+### Admin Dashboard
+![Admin](https://via.placeholder.com/800x400/8b5cf6/ffffff?text=Admin+Dashboard)
+
+</div>
+
+---
 
 ## 🔒 Security Features
 
@@ -441,104 +296,89 @@ pm2 save
 - ✅ File upload validation and sanitization
 - ✅ CORS protection
 - ✅ Session management
-- ✅ Input validation and sanitization
-- ✅ SQL injection prevention (NoSQL)
+- ✅ Input validation
 - ✅ XSS protection
 
-## 📖 Usage Guide
+---
 
-### For Farmers (Users)
+## 📖 Documentation
 
-1. **Sign Up/Login**
-   - Click "Continue with Google" or use mobile number
-   - Enter OTP if using phone authentication
-   - Complete profile setup
+- **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[Deployment Guide](DEPLOYMENT.md)** - Deploy to production
+- **[ML Integration](ML_INTEGRATION.md)** - Connect your model
+- **[Architecture](ARCHITECTURE.md)** - System design
+- **[Contributing](CONTRIBUTING.md)** - Contribution guidelines
+- **[Project Summary](PROJECT_SUMMARY.md)** - Complete overview
 
-2. **Upload Cattle Image**
-   - Navigate to "Upload Image" page
-   - Click upload area or drag-and-drop image
-   - Supported formats: JPEG, JPG, PNG (max 10MB)
-   - Click "Analyze Image"
-
-3. **View Results**
-   - See disease detection status (Healthy/Diseased)
-   - View disease name and severity stage
-   - Check confidence score
-   - Read recommended precautions
-
-4. **Download Report**
-   - Click "Download PDF" button
-   - Save professional health report
-   - Share with veterinarian if needed
-
-5. **View History**
-   - Go to "My Reports" page
-   - Browse all past diagnoses
-   - Download any previous report
-
-### For Administrators
-
-1. **Access Dashboard**
-   - Login with admin account
-   - Click "Admin" in navigation
-
-2. **Monitor Statistics**
-   - View total users and reports
-   - Check healthy vs diseased distribution
-   - Analyze disease category trends
-
-3. **Manage Users**
-   - View all registered users
-   - Monitor user activity
-   - Track report generation
+---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please follow these steps:
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+2. Create feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+---
 
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+---
+
 ## 🆘 Support
 
-For issues, questions, or contributions:
-- **GitHub Issues**: [Create an issue](https://github.com/Ayisha114/cattle-disease-detection/issues)
-- **Email**: support@example.com
-- **Documentation**: [Wiki](https://github.com/Ayisha114/cattle-disease-detection/wiki)
+- **Documentation**: Check the docs folder
+- **Issues**: [Create an issue](https://github.com/Ayisha114/cattle-disease-detection/issues)
+- **Discussions**: [Join discussion](https://github.com/Ayisha114/cattle-disease-detection/discussions)
+
+---
 
 ## 🎯 Roadmap
 
 - [ ] Mobile app (React Native/Flutter)
-- [ ] Real-time push notifications
-- [ ] Veterinarian consultation booking
-- [ ] Cattle health tracking timeline
-- [ ] Vaccination reminder system
+- [ ] Real-time notifications
+- [ ] Veterinarian consultation
+- [ ] Cattle health tracking
+- [ ] Vaccination reminders
 - [ ] Multi-farm management
-- [ ] Blockchain for medical records
 - [ ] WhatsApp bot integration
 - [ ] Offline mode support
-- [ ] Advanced analytics dashboard
+- [ ] Blockchain for records
+
+---
 
 ## 👥 Authors
 
 - **Ayisha D** - [GitHub](https://github.com/Ayisha114)
+
+---
 
 ## 🙏 Acknowledgments
 
 - Vision Transformer (ViT) model architecture
 - Open-source community
 - Farmers and veterinarians for feedback
-- Contributors and testers
+- All contributors
 
 ---
+
+## ⭐ Star History
+
+If you find this project useful, please consider giving it a star! ⭐
+
+---
+
+<div align="center">
 
 **Built with ❤️ for farmers and cattle health monitoring**
 
 🐄 Making cattle healthcare accessible through AI technology
+
+[⬆ Back to Top](#-cattle-disease-detection--health-monitoring-system)
+
+</div>
